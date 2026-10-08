@@ -26,7 +26,7 @@ function draw() {
         velY *= -0.9;
     }
     posX+= velX;
-    velX+= 0.1;
+    velX*= 1.001;
     console.log(posX);
     // MOVIMIENTO EN X
     posX += velX;
@@ -34,7 +34,7 @@ function draw() {
     // BORDE DERECHO
     if (posX >= width - 25) {
         posX = width - 25;
-        velX *= -0.8;
+        velX *= -0.7;
     }
 
     // BORDE IZQUIERDO
