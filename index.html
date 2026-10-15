@@ -1,13 +1,63 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pelota que rebota</title>
+    <style>
+        /* Reset CSS: quita márgenes/paddings y el borde blanco */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;              /* sin barras de scroll */
+            background: rgb(100, 152, 150); /* mismo color que el canvas */
+        }
+
+        /* display:block evita el espacio en línea que dejaba una franja blanca */
+        canvas {
+            display: block;
+        }
+
+        /* Título centrado en la parte superior, sobre el canvas */
+        #titulo {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 12px 0;
+            text-align: center;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 28px;
+            color: #ffffff;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+            z-index: 10;
+            pointer-events: none; /* no bloquea el cursor sobre la pelota */
+        }
+    </style>
     <script src="https://cdn.jsdelivr.net/npm/p5@2.3.4/lib/p5.js"></script>
+    <!-- Polyfill: Firefox/Safari no implementan AudioParam.cancelAndHoldAtTime,
+         que Tone.js (la base de p5.sound) usa al disparar la envolvente.
+         Sin esto, env.play() lanza "cancelAndHoldAtTime is not a function". -->
+    <script>
+        if (typeof AudioParam !== "undefined" && !AudioParam.prototype.cancelAndHoldAtTime) {
+            AudioParam.prototype.cancelAndHoldAtTime = function (cancelTime) {
+                this.cancelScheduledValues(cancelTime);
+                return this;
+            };
+        }
+    </script>
+    <!-- p5.sound es un paquete aparte desde p5 2.x (antes venía junto a p5) -->
+    <script src="https://cdn.jsdelivr.net/npm/p5.sound@0.4.1/dist/p5.sound.min.js"></script>
 </head>
 <body>
-    <h1>Pelota que rebota</h1>  
+    <h1 id="titulo">Pelota que rebota</h1>
     <script src="sketch.js"></script>
 </body>
 </html>
